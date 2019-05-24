@@ -1,0 +1,10 @@
+galaxy_info:
+  author: Vu Minh Quan <mquan.vu167@hotmail.com>
+  description: Role to setup environment for K8s node bootstrapping
+  license: GPLv3
+  min_ansible_version: 2.2
+  platforms:
+  - name: Debian
+  - name: Ubuntu
+  galaxy_tags: []
+dependencies: []

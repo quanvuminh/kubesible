@@ -1,0 +1,21 @@
+---
+
+- name: Kubeadm | Add packages.cloud.google.com APT Key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+- name: Kubeadm | Add specified repository into sources list.
+  apt_repository:
+    filename: kubernetes.list
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+
+- name: Kubeadm | Install kubeadm, kubelet, kubectl for Kubernetes version {{ k8s_version }}
+  apt:
+    cache_valid_time: "{{ apt_cache_valid_time | default(600) }}"
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - "kubeadm={{ k8s_version }}-00"
+    - "kubelet={{ k8s_version }}-00"
+    - kubectl
+  ignore_errors: "{{ ansible_check_mode }}"

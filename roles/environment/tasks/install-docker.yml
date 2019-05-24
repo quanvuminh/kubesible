@@ -1,0 +1,29 @@
+---
+
+- name: Docker | Uninstall old versions
+  apt:
+    cache_valid_time: "{{ apt_cache_valid_time | default(600) }}"
+    name: "{{ item }}"
+    update_cache: yes
+  loops:
+    - docker
+    - docker-engine
+    - docker.io
+    - containerd
+    - runc
+
+- name: Docker | Add download.docker.com APT Key
+  apt_key:
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    url: https://download.docker.com/linux/debian/gpg
+
+- name: Docker | Add specified repository into sources list.
+  apt_repository:
+    filename: docker.list
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+
+- name: Docker | Install docker-ce
+  apt:
+    cache_valid_time: "{{ apt_cache_valid_time | default(600) }}"
+    name: docker-ce
+    update_cache: yes

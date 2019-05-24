@@ -1,0 +1,5 @@
+---
+
+k8s_version: 1.12.1
+
+k8s_container_runtime: docker

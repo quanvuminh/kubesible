@@ -1,0 +1,16 @@
+---
+
+- name: Allow APT over HTTPS
+  apt:
+    cache_valid_time: "{{ apt_cache_valid_time | default(600) }}"
+    name: "{{ item }}"
+    update_cache: yes
+  loops:
+    - apt-transport-https
+    - ca-certificates
+    - gnupg2
+    - software-properties-common
+
+- include: "install-{{ k8s_container_runtine }}.yml"
+
+- include: install-kubeadm.yml
